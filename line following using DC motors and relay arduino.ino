@@ -14,7 +14,10 @@
 #define IN4 6
 #define ENA 10
 #define ENB 5
-const int irsensor=13;
+int s1 =12;  //left ir
+int s2 = 11;  
+int s3 = 13;  
+int val_L,val_R,val_M;
 
 void motorAccel() {
   for (int i = 0; i < 256; i++) {
@@ -92,6 +95,12 @@ void rotate(){
 }
 void setup() {
 
+Serial.begin(9600);
+
+  pinMode(s1,INPUT); // make the L_pin as an input
+  pinMode(s2,INPUT); // make the M_pin as an input
+  pinMode(s3,INPUT); // make the R_pin as an input
+  
   // Set motor connections as outputs
   pinMode(IN1, OUTPUT);
   pinMode(IN2, OUTPUT);
@@ -99,7 +108,7 @@ void setup() {
   pinMode(IN4, OUTPUT);
   pinMode(ENA, OUTPUT);
   pinMode(ENB, OUTPUT);
-  Serial.begin(9600);
+  
   // Start with motors off
   digitalWrite(IN1, LOW);
   digitalWrite(IN2, LOW);
@@ -112,18 +121,58 @@ void setup() {
 
 void loop() {
 
+ val_L = digitalRead(s1);//LEFT
+   val_M = digitalRead(s2);//MIDDLE
+   val_R = digitalRead(s3);//RIGHT
+   
+  // Serial.print("left:");
+  // Serial.println(val_L);
+  //  Serial.print(" RIGHT:");
+  // Serial.print(val_R);
+  // Serial.print(" MIDDLE:");
+  // Serial.println(val_M);
+  // delay(500);// delay in between reads for stability
 
-if (digitalRead(irsensor)==HIGH){
+  if(val_M == 1)//if the state of middle one is 1, which means detecting black line
+  {
+    forward();//car goes forward
+    Serial.println("moving forward");
+  }
+  else
+  {
+    if((val_L == 1)&&(val_R == 0))//if only left line tracking sensor detects black trace
+    {
+      left();//car turns left
+       Serial.println("moving left");
+    }
+else if((val_L == 0)&&(val_R == 1))//if only right line tracking sensor detects black trace
+    {
+      Right();//car turns right
+       Serial.println("moving right");
+    }
+    else// if left and right line tracking sensors detect black trace or they don’t read
+    {
+      rotate();//car searchers 
+       Serial.println("rotating ");
+    }
+  }
 
-  forward();
 
-} else if (digitalRead(irsensor)==LOW){
+
+
+
+
+
+
+//   forward();
+
+// } else if (digitalRead(irsensor)==LOW){
  
- rotate(); 
-}else{
-   analogWrite(ENA, 0);
-  analogWrite(ENB, 0);
-}
+//  rotate(); 
+// }else{
+//    analogWrite(ENA, 0);
+//   analogWrite(ENB, 0);
+// }
  
 // forward();
 // delay(3000);
