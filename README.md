@@ -16,11 +16,19 @@ https://user-images.githubusercontent.com/82571414/202453982-88f90c01-694e-47bf-
 
 **line following rover using DC motors relay and Ir sensor**
 
-Uploading WhatsApp Video 2023-03-04 at 12.22.20.mp4…
+
+https://user-images.githubusercontent.com/82571414/222920547-4743af49-db51-45a3-8406-b3bccd269d6a.mp4
+
+
+
 
 **line following rover using DC motors relay and Ir sensor**
 
-Uploading WhatsApp Video 2023-03-04 at 17.05.58.mp4…
+
+
+Uploading WhatsApp Video 2023-03-04 at 12.22.20.mp4…
+
+
 
 
 KS0470 Keyestudio AWD robot car v2.0 kit  - https://www.dropbox.com/sh/9j2cegb9jf9olaj/AADFzJ1EEKSKtJ_-WZaQBAXMa?dl=0 
