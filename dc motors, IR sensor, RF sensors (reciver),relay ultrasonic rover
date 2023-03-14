@@ -1,0 +1,97 @@
+#include <RH_ASK.h> // Include RadioHead Amplitude Shift Keying Library
+#include <SPI.h> // Include dependant SPI Library
+ 
+// Create Amplitude Shift Keying Object
+RH_ASK rftx;
+ 
+
+int LED1 = 2; //Red
+int LED2 = 3; //Yellow
+int LED3 = 4; //Blue
+int LED4 = 5; //Green
+
+void setup() {
+  pinMode(LED1, OUTPUT);
+  pinMode(LED2, OUTPUT);
+  pinMode(LED3, OUTPUT);
+  pinMode(LED4, OUTPUT);
+  // Initialize ASK Object
+rftx.init();
+// Setup Serial Monitor
+Serial.begin(9600);
+        // For debugging only
+
+
+}
+
+void loop() {
+
+ 
+  redOn();
+  if (redOn() == true){
+const char *msg1 = "STOP";
+rftx.send((uint8_t *)msg1, strlen(msg1));
+rftx.waitPacketSent();
+{
+  
+Serial.println("Message Transmitted: STOP ");
+
+}
+  }
+  delay(5000);
+
+  yellowOn();
+  if(yellowOn() == true){
+   const char *msg2 = "Get Ready";
+rftx.send((uint8_t *)msg2, strlen(msg2));
+rftx.waitPacketSent(); 
+Serial.println("Message Transmitted: Get Ready");
+
+  }delay(5000);
+
+  blueOn();
+   if(blueOn() == true){
+   const char *msg3 = "Boda Go";
+rftx.send((uint8_t *)msg3, strlen(msg3));
+rftx.waitPacketSent(); 
+Serial.println("Message Transmitted: Boda Go");
+
+  }
+  delay(5000);
+
+  greenwOn();
+  if(greenwOn() == true){
+   const char *msg4 = "All GO";
+rftx.send((uint8_t *)msg4, strlen(msg4));
+rftx.waitPacketSent(); 
+Serial.println("Message Transmitted: All Go");
+  }
+
+  delay(5000);
+
+}
+
+bool redOn (){
+  digitalWrite(LED1, HIGH);
+  digitalWrite(LED2, LOW);
+  digitalWrite(LED3, LOW);
+  digitalWrite(LED4, LOW);
+}
+bool yellowOn (){
+  digitalWrite(LED1, LOW);
+  digitalWrite(LED2, HIGH);
+  digitalWrite(LED3, LOW);
+  digitalWrite(LED4, LOW);
+}
+bool blueOn (){
+  digitalWrite(LED1, LOW);
+  digitalWrite(LED2, LOW);
+  digitalWrite(LED3, HIGH);
+  digitalWrite(LED4, LOW);
+}
+bool greenwOn (){
+  digitalWrite(LED1, LOW);
+  digitalWrite(LED2, LOW);
+  digitalWrite(LED3, LOW);
+  digitalWrite(LED4, HIGH);
+}
