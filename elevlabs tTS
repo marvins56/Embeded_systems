@@ -12,3 +12,20 @@ def speak(text):
         subprocess.run(['aplay', '-q', 'output.wav'], check=True)
     else:
         print('Error:', response.status_code, response.text)
+        *************************
+import pygame
+
+# initialize the SynthesisApi with your API key
+api = tts.SynthesisApi(api_key='YOUR_API_KEY')
+
+# function to speak the input text using Eleven Labs API and play the output audio
+def speak(text):
+    # generate the audio using the Eleven Labs API
+    response = api.synthesize(text, voice='en-US_AllisonV3Voice', format='wav', rate=0.7)
+    if response.ok:
+        # load the output audio file into a Pygame mixer channel and play it
+        pygame.mixer.init()
+        sound = pygame.mixer.Sound(response.content)
+        sound.play()
+    else:
+        print('Error:', response.status_code, response.text)
