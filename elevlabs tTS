@@ -1,0 +1,14 @@
+import elevenstt as tts
+
+# initialize the SynthesisApi with your API key
+api = tts.SynthesisApi(api_key='YOUR_API_KEY')
+
+# function to speak the input text using Eleven Labs API
+def speak(text):
+    response = api.synthesize(text, voice='en-US_AllisonV3Voice', format='wav', rate=0.7)
+    if response.ok:
+        with open('output.wav', 'wb') as f:
+            f.write(response.content)
+        subprocess.run(['aplay', '-q', 'output.wav'], check=True)
+    else:
+        print('Error:', response.status_code, response.text)
