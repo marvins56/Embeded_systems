@@ -1,0 +1,61 @@
+#include <Wire.h>
+#include <Adafruit_GFX.h>
+#include <Adafruit_SSD1306.h>
+
+#define SCREEN_WIDTH 128 // OLED display width, in pixels
+#define SCREEN_HEIGHT 64 // OLED display height, in pixels
+
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
+
+void setup() {
+  display.begin(SSD1306_SWITCHCAPVCC, 0x3C); // initialize with the I2C addr 0x3C
+  display.clearDisplay(); // Clear the buffer.
+  
+  // Display Text
+  display.setTextSize(3);
+  display.setTextColor(WHITE);
+  display.setCursor(0, 0);
+  display.print("Hello!");
+  display.display();
+}
+
+void loop() {
+  display.clearDisplay();
+  display.setTextSize(2);
+  display.setTextColor(WHITE);
+  
+  int sensorValue = analogRead(A0); // read A0 data and assign to sensorValue
+  
+  display.setCursor(0,0);
+  display.print("Value: ");
+  display.print(sensorValue);
+  
+  String status;
+  if(sensorValue < 301) {
+    status = "Dry Soil";
+  }
+  else if(sensorValue > 300 && sensorValue < 501) {
+    status = "Humid Soil";
+  }
+  else if(sensorValue > 500) {
+    status = "In Water";
+  }
+
+  display.setCursor(0,30);
+  display.print(status);
+
+  display.display();
+  
+  delay(200);
+}
+
+void fillDisplay(void) {
+  display.clearDisplay();
+  for (int j = 0; j < 63; j++) {
+    for (int i = 0; i < 127; i++) {
+      display.drawPixel(i, j, WHITE);
+    }
+    display.display();
+    delay(2);
+  }
+}
