@@ -1,0 +1,97 @@
+
+#define LEDPin 13 // Onboard LED
+#define fan 12 // Onboard LED
+#define smokefan 11
+
+#define buzzer 5
+#define sensorPin A0
+
+const int pingPin = 6; // Trigger Pin of Ultrasonic Sensor
+const int echoPin = 7; // Echo Pin of Ultrasonic Sensor
+
+
+void setup() {
+
+  Serial.begin(9600);
+  pinMode(buzzer, OUTPUT);
+  digitalWrite(buzzer, LOW);  
+  
+  pinMode(13,OUTPUT);
+  pinMode(12,OUTPUT);
+
+   Serial.begin(9600); // Starting Serial Terminal
+}
+
+void loop() {
+   long duration, inches, cm;
+   pinMode(pingPin, OUTPUT);
+   digitalWrite(pingPin, LOW);
+   delayMicroseconds(2);
+   digitalWrite(pingPin, HIGH);
+   delayMicroseconds(10);
+   digitalWrite(pingPin, LOW);
+   pinMode(echoPin, INPUT);
+   duration = pulseIn(echoPin, HIGH);
+   inches = microsecondsToInches(duration);
+   
+   cm = microsecondsToCentimeters(duration);
+if(cm <= 10) {
+  
+digitalWrite(13,HIGH);
+digitalWrite(fan,HIGH);
+
+}
+else if(cm >= 11 && cm <= 50 ) {
+
+digitalWrite(13,LOW);
+digitalWrite(fan,LOW);
+
+}
+
+else{
+  
+digitalWrite(13,LOW);
+digitalWrite(fan,LOW);
+
+}
+
+   Serial.print(inches);
+   Serial.print("in, ");
+   Serial.print(cm);
+   Serial.print("cm");
+   Serial.println();
+   delay(100);
+
+
+
+       Serial.print("Analog output: ");
+      Serial.println(readSensor());
+}
+
+
+long microsecondsToInches(long microseconds) {
+   return microseconds / 74 / 2;
+}
+
+long microsecondsToCentimeters(long microseconds) {
+   return microseconds / 29 / 2;
+}
+
+//  This function returns the analog data to calling function
+int readSensor() {
+  unsigned int sensorValue = analogRead(sensorPin);  // Read the analog value from sensor
+  unsigned int outputValue = map(sensorValue, 0, 1023, 0, 255); // map the 10-bit data to 8-bit data
+  if (outputValue > 65)
+  {
+    analogWrite(buzzer, outputValue); 
+    digitalWrite(smokefan,HIGH);// generate PWM signal
+    
+  }
+    
+  else{
+        digitalWrite(buzzer, LOW);
+        digitalWrite(smokefan,LOW);    
+  }
+    
+  return outputValue;             // Return analog moisture value
+}
