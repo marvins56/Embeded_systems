@@ -1,71 +1,103 @@
 
-#define LEDPin 13 // Onboard LED
+#define LEDPin 2 // Onboard LED
+#define LEDPin2 3 // Onboard LED
 #define fan 12 // Onboard LED
 #define smokefan 11
-
 #define buzzer 5
 #define sensorPin A0
 
 const int pingPin = 6; // Trigger Pin of Ultrasonic Sensor
 const int echoPin = 7; // Echo Pin of Ultrasonic Sensor
-
+const int pingPin2 = 10; // Trigger Pin of Ultrasonic Sensor
+const int echoPin2 = 9; // Echo Pin of Ultrasonic Sensor
 
 void setup() {
+digitalWrite(13,LOW);
 
   Serial.begin(9600);
   pinMode(buzzer, OUTPUT);
-  digitalWrite(buzzer, LOW);  
-  
+  digitalWrite(buzzer, LOW);
   pinMode(13,OUTPUT);
+  
+  pinMode(LEDPin,OUTPUT);
+  pinMode(LEDPin2,OUTPUT);
   pinMode(12,OUTPUT);
 
    Serial.begin(9600); // Starting Serial Terminal
 }
 
 void loop() {
-   long duration, inches, cm;
+readSensor();
+
+   long duration2,duration, inches2,inches, cm,cm2;
    pinMode(pingPin, OUTPUT);
+   pinMode(pingPin2, OUTPUT);
+   
    digitalWrite(pingPin, LOW);
+      digitalWrite(pingPin2, LOW);
+
    delayMicroseconds(2);
    digitalWrite(pingPin, HIGH);
+   digitalWrite(pingPin2, HIGH);
+   
    delayMicroseconds(10);
    digitalWrite(pingPin, LOW);
-   pinMode(echoPin, INPUT);
-   duration = pulseIn(echoPin, HIGH);
-   inches = microsecondsToInches(duration);
+   digitalWrite(pingPin2, LOW);
    
+   pinMode(echoPin, INPUT);
+   pinMode(echoPin2, INPUT);
+   
+   duration = pulseIn(echoPin, HIGH);
+  duration2 = pulseIn(echoPin2, HIGH);
+
+   inches = microsecondsToInches(duration);
+    inches2 = microsecondsToInches(duration2);
+
    cm = microsecondsToCentimeters(duration);
-if(cm <= 10) {
+   cm2 = microsecondsToCentimeters(duration2);
+ //outside lights  
+if(cm <= 20) {
   
-digitalWrite(13,HIGH);
-digitalWrite(fan,HIGH);
+  digitalWrite(LEDPin,HIGH);
+
+if (millis() % 5000 < 100) { // Trigger sound for a short duration every 5 seconds
+    generateSound(1000);
+  }
 
 }
-else if(cm >= 11 && cm <= 50 ) {
+else if(cm >= 21 && cm <= 40 ) {
 
-digitalWrite(13,LOW);
-digitalWrite(fan,LOW);
+digitalWrite(LEDPin,HIGH);
+digitalWrite(buzzer,LOW);
 
 }
 
 else{
   
-digitalWrite(13,LOW);
-digitalWrite(fan,LOW);
+digitalWrite(LEDPin,LOW);
+digitalWrite(buzzer,LOW);
 
 }
 
-   Serial.print(inches);
-   Serial.print("in, ");
-   Serial.print(cm);
-   Serial.print("cm");
-   Serial.println();
-   delay(100);
+      Serial.println(cm2);
 
+//inside 
+if(cm2 <= 10) {
+  
+  digitalWrite(LEDPin2,HIGH);
+  digitalWrite(fan,HIGH);
+  digitalWrite(smokefan,HIGH);
+}
 
-
-       Serial.print("Analog output: ");
-      Serial.println(readSensor());
+else{
+  
+digitalWrite(LEDPin2,LOW);
+  digitalWrite(fan,LOW);
+  digitalWrite(smokefan,LOW);
+}
+      
+      // Serial.print("Analog output: ");
+      // Serial.println(readSensor());
 }
 
 
@@ -73,6 +105,12 @@ long microsecondsToInches(long microseconds) {
    return microseconds / 74 / 2;
 }
 
+void generateSound(int durationMs) {
+  digitalWrite(buzzer, HIGH); // Sound
+  delay(durationMs);
+  digitalWrite(buzzer, LOW); // Not sound
+  delay(durationMs);
+}
 long microsecondsToCentimeters(long microseconds) {
    return microseconds / 29 / 2;
 }
