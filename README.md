@@ -7,11 +7,7 @@ CLICK TO SEE VIDEO
 [![LOOD PRESSURE MONITOR](https://img.youtube.com/vi/ghklScLfzjY/0.jpg)](https://www.youtube.com/watch?v=ghklScLfzjY)
 
 
-**edge following rover **
-
-
-
-
+**Edge following rover**
 
 https://user-images.githubusercontent.com/82571414/202454222-f9e0600d-b115-4c95-aa88-21aa1e653300.mp4
 
