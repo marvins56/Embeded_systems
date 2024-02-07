@@ -1,5 +1,11 @@
 # embeded-systems
 **ARDUINO PROJECTS**
+**BLOOD PRESSURE MONITOR**
+CLICK TO SEE VIDEO
+
+[![LOOD PRESSURE MONITOR](https://img.youtube.com/vi/ghklScLfzjY/0.jpg)](https://www.youtube.com/watch?v=ghklScLfzjY)
+
+
 **edge following rover **
 
 
