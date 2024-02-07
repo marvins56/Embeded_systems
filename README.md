@@ -1,6 +1,10 @@
 # embeded-systems
 **ARDUINO PROJECTS**
 
+![IMG_0187](https://github.com/marvins56/embeded-systems/assets/82571414/be2e81d1-9f0b-4541-8136-4396565a654e)
+
+
+
 **BLOOD PRESSURE MONITOR**
 CLICK TO SEE VIDEO
 
@@ -29,7 +33,6 @@ https://user-images.githubusercontent.com/82571414/222920547-4743af49-db51-45a3-
 https://user-images.githubusercontent.com/82571414/222920762-ce386689-2600-4998-9191-efd5e89f845b.mp4
 
 
-![IMG_0187](https://github.com/marvins56/embeded-systems/assets/82571414/be2e81d1-9f0b-4541-8136-4396565a654e)
 
 
 
